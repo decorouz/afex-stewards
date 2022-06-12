@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% load socialaccount %}
+
+
+{% block title %}Sign Up{% endblock title %}
+
+
+{% block content %}
+{% get_providers as socialaccount_providers %}
+<div class="container py-5 ">
+   <div class="col-12 col-md-8 ">
+      <div class="card shadow-2-strong" style="border-radius: 1rem;">
+         <div class="card-body p-5">
+            <div class=" content-section">
+               <form action="{% url 'register' %}" method="POST">
+                  {% csrf_token %}
+                  <fieldset class="form-group">
+                     <legend class="border-bottom mb-4">Join Today</legend>
+                     {{form|crispy}}
+                  </fieldset>
+                  <div class="form-group">
+                     <button class="btn btn-secondary btn-lg mb-2" type="submit">Sign Up</button>
+                  </div>
+               </form>
+
+               <div class="border-top pt-3">
+                  <small class="text-muted">
+                     Already have an account <a href="{% url 'login' %}">Sign In</a>
+                  </small>
+               </div>
+            </div>
+         </div>
+      </div>
+   </div>
+</div>
+
+
+
+{% endblock content %}

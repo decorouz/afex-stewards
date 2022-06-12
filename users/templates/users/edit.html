@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+
+{% block title %}Account Update{% endblock title %}
+
+
+{% block content %}
+
+<section class="content-section">
+    <div class="py-5 mt-auto">
+        <div class="container px-lg-auto">
+            <div class="m-4 m-lg-5">
+                <div class="main-body">
+                    <form action="" method="POST" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        {{profile_form|crispy}}
+                        <div class="form-group">
+                            <button class="btn btn-secondary btn-lg mb-2" type="submit">Save Profile</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock content %}

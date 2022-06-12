@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 
 from pathlib import Path
 from decouple import config
+import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -32,12 +33,14 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    "users",
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    "crispy_forms",
     # Django allauth apps
     "django.contrib.sites",
     "allauth",
@@ -48,8 +51,12 @@ INSTALLED_APPS = [
     "allauth.socialaccount.providers.facebook",
 ]
 
+
+CRISPY_TEMPLATE_PACK = "bootstrap4"
+
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
+    "whitenoise.middleware.WhiteNoiseMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
@@ -63,7 +70,7 @@ ROOT_URLCONF = "afex.urls"
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": [],
+        "DIRS": [os.path.join(BASE_DIR, "templates")],
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [
@@ -76,7 +83,7 @@ TEMPLATES = [
     },
 ]
 
-# ALLAUTH
+# ALLAUTH Additional Configuration
 AUTHENTICATION_BACKENDS = [
     # Needed to login by username in Django admin, regardless of `allauth`
     "django.contrib.auth.backends.ModelBackend",
@@ -84,14 +91,31 @@ AUTHENTICATION_BACKENDS = [
     "allauth.account.auth_backends.AuthenticationBackend",
 ]
 
-SITE_ID = 1
-
-# Use email as the primary identifier
-ACCOUNT_AUTHENTICATION_METHOD = "email"
+# Request e-mail address from 3rd party account provider
+SOCIALACCOUNT_QUERY_EMAIL = True
 ACCOUNT_EMAIL_REQUIRED = True
 
-# Eliminate need to provide username, as it's a very old practice
-ACCOUNT_USERNAME_REQUIRED = False
+
+# enable email scope to receive user’s email addresses after successful social login:
+SOCIALACCOUNT_PROVIDERS = {
+    "google": {
+        "SCOPE": [
+            "profile",
+            "email",
+        ],
+        "AUTH_PARAMS": {
+            "access_type": "online",
+        },
+    }
+}
+
+SOCIALACCOUNT_STORE_TOKENS = True
+SITE_ID = 1
+
+
+# LOGIN_REDIRECT_URL = "/"
+LOGIN_REDIRECT_URL = "/"
+
 
 WSGI_APPLICATION = "afex.wsgi.application"
 
@@ -142,7 +166,13 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
 
-STATIC_URL = "static/"
+STATIC_URL = "/static/"
+STATIC_ROOT = os.path.join(BASE_DIR, "static")
+
+# STATICFILES_DIRS = [BASE_DIR / "static"]
+
+MEDIA_URL = "/images/"
+MEDIA_ROOT = os.path.join(BASE_DIR, "static/images")
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
