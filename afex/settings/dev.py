@@ -5,6 +5,7 @@ from .common import *
 DEBUG = True
 SECRET_KEY = config("SECRET_KEY")
 
+SITE_ID = 1
 
 DATABASES = {
     "default": {

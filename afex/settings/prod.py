@@ -5,6 +5,8 @@ from .common import *
 
 DEBUG = False
 
+SITE_ID = 2
+
 SECRET_KEY = os.environ["SECRET_KEY"]
 
 ALLOWED_HOSTS = ["afexstewards-prod.herokuapp.com"]
