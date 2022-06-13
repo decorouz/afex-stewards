@@ -1,2 +1,5 @@
 env
 venv
+/media/
+/static/
+*.pyc
