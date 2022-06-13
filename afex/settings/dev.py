@@ -3,7 +3,6 @@ from decouple import config
 from .common import *
 
 DEBUG = True
-
 SECRET_KEY = config("SECRET_KEY")
 
 
