@@ -134,18 +134,6 @@ LOGIN_REDIRECT_URL = "update"
 WSGI_APPLICATION = "afex.wsgi.application"
 
 
-# Database
-# https://docs.djangoproject.com/en/4.0/ref/settings/#databases
-
-DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.postgresql",
-        "NAME": config("DB_NAME"),
-        "HOST": config("DB_HOST"),
-        "USER": config("DB_USER"),
-        "PASSWORD": config("DB_PASSWORD"),
-    }
-}
 # Password validation
 # https://docs.djangoproject.com/en/4.0/ref/settings/#auth-password-validators
 
