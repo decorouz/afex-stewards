@@ -1,4 +1,3 @@
-import hashlib
 from allauth.account.signals import user_signed_up
 from django.dispatch import receiver
 from django.db.models.signals import post_save
