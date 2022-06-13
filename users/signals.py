@@ -1,3 +1,4 @@
+import hashlib
 from allauth.account.signals import user_signed_up
 from django.dispatch import receiver
 from django.db.models.signals import post_save
@@ -10,19 +11,14 @@ def populate_profile(sociallogin, user, **kwargs):
 
     if sociallogin.account.provider == "facebook":
         user_data = user.socialaccount_set.filter(provider="facebook")[0].extra_data
-        picture_url = (
-            "http://graph.facebook.com/"
-            + sociallogin.account.uid
-            + "/picture?type=large"
-        )
         email = user_data["email"]
-        first_name = user_data["name"]
-
+        first_name = user_data["first_name"]
+        last_name = user_data["last_name"]
+        picture_url = user_data["picture"]["data"]["url"]
     if sociallogin.account.provider == "google":
         user_data = user.socialaccount_set.filter(provider="google")[0].extra_data
         first_name = user_data["given_name"]
         last_name = user_data["family_name"]
-
         email = user_data["email"]
         picture_url = user_data["picture"]
 
@@ -42,4 +38,5 @@ def updateprofile(sender, instance, created, **kwargs):
         user.last_name = profile.last_name
         user.username = profile.username
         user.email = profile.email
+        user.profile_photo = profile.profile_photo
         user.save()

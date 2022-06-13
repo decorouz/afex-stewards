@@ -94,6 +94,7 @@ AUTHENTICATION_BACKENDS = [
 # Request e-mail address from 3rd party account provider
 SOCIALACCOUNT_QUERY_EMAIL = True
 ACCOUNT_EMAIL_REQUIRED = True
+ACCOUNT_EMAIL_VERIFICATION = "none"
 
 
 # enable email scope to receive user’s email addresses after successful social login:
@@ -109,12 +110,37 @@ SOCIALACCOUNT_PROVIDERS = {
     }
 }
 
+SOCIALACCOUNT_PROVIDERS = {
+    "facebook": {
+        "METHOD": "oauth2",
+        "SDK_URL": "//connect.facebook.net/{locale}/sdk.js",
+        "SCOPE": ["email", "public_profile"],
+        "AUTH_PARAMS": {"auth_type": "reauthenticate"},
+        "INIT_PARAMS": {"cookie": True},
+        "FIELDS": [
+            "id",
+            "first_name",
+            "last_name",
+            "middle_name",
+            "email",
+            "name",
+            "name_format",
+            "picture",
+            "short_name",
+        ],
+        "EXCHANGE_TOKEN": True,
+        "LOCALE_FUNC": lambda request: "en_US",
+        "VERIFIED_EMAIL": False,
+        "VERSION": "v13.0",
+    }
+}
+
 SOCIALACCOUNT_STORE_TOKENS = True
 SITE_ID = 1
 
 
 # LOGIN_REDIRECT_URL = "/"
-LOGIN_REDIRECT_URL = "/"
+LOGIN_REDIRECT_URL = "update"
 
 
 WSGI_APPLICATION = "afex.wsgi.application"
@@ -169,7 +195,6 @@ USE_TZ = True
 STATIC_URL = "/static/"
 STATIC_ROOT = os.path.join(BASE_DIR, "static")
 
-# STATICFILES_DIRS = [BASE_DIR / "static"]
 
 MEDIA_URL = "/images/"
 MEDIA_ROOT = os.path.join(BASE_DIR, "static/images")

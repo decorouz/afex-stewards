@@ -13,8 +13,9 @@ class Profile(models.Model):
     about = models.TextField()
     birth_date = models.DateField(null=True)
     profile_photo = models.ImageField(
-        null=True, upload_to="profiles", default="profiles/logo2.png"
+        null=True, upload_to="profiles", default="profiles/logo2.png", max_length=255
     )
+    avatar_url = models.CharField(max_length=256, blank=True, null=True)
     social_google = models.CharField(max_length=250, null=True, blank=True)
     social_facebook = models.CharField(max_length=250, null=True, blank=True)
 

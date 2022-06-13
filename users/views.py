@@ -73,6 +73,8 @@ def update_account_view(request):
             except:
                 messages.warning(request, "Username already exist")
 
+            print(profile_form.cleaned_data)
+
     else:
         profile_form = ProfileForm(instance=request.user.profile)
 
