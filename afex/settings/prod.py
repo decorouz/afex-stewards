@@ -5,6 +5,8 @@ from .common import *
 
 DEBUG = True
 
+SITE_ID = 1
+
 
 SECRET_KEY = os.environ["SECRET_KEY"]
 
